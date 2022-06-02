@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/head :: head"></head>
+<script type="text/javascript">
+  $(function () {
+    $('#ec').validate({
+      rules: {
+        name: "required",
+        phone: {
+          required: true,
+          rangelength: [11, 11]
+        },
+        idNo: {
+          required: true,
+          rangelength: [18, 18]
+        }
+      },
+      messages: {
+        name: "请输入姓名",
+        phone: {
+          required: "请输入手机号码",
+          rangelength: "手机号码格式不正确"
+        },
+        idNo: {
+          required: "请输入身份证号码",
+          rangelength: "身份证号码格式不正确"
+        },
+        submitHandler: function (form) {
+          $(form).find(":submit").attr("disabled", true).text("正在提交...");
+          form.submit();
+        }
+      }
+    });
+  });
+</script>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="ibox float-e-margins">
+    <div class="ibox-content" style="width: 98%;">
+      <form id="ec" action="/houseUser/save" method="post" class="form-horizontal">
+        <input type="hidden" name="houseId" th:value="${houseUser.houseId}"/>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">房东姓名：</label>
+          <div class="col-sm-10">
+            <input type="text" name="name" id="name" class="form-control" />
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">手机：</label>
+          <div class="col-sm-10">
+            <input type="text" name="phone" id="phone" class="form-control" />
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">性别</label>
+          <div class="col-sm-10">
+            <div class="radio">
+              <label><input type="radio" checked="checked" value="1" name="sex">男</label>
+            </div>
+            <div class="radio">
+              <label> <input type="radio" value="2" name="sex">女</label>
+            </div>
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">身份证号：</label>
+          <div class="col-sm-10">
+            <input type="text" name="idNo" id="idNo" class="form-control" />
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <div class="col-sm-4 col-sm-offset-2 text-right">
+            <button class="btn btn-primary" type="submit">确定</button>
+            <button class="btn btn-white" type="button" onclick="javascript:opt.closeWin();" value="取消">取消</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
